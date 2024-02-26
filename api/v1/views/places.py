@@ -14,6 +14,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
 def retrieve_places_by_city(city_id):
     """
@@ -25,6 +26,7 @@ def retrieve_places_by_city(city_id):
     places = [place.to_dict() for place in city.places]
     return jsonify(places)
 
+
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def retrieve_place(place_id):
     """
@@ -35,6 +37,7 @@ def retrieve_place(place_id):
         return jsonify(place.to_dict())
     else:
         abort(404)
+
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def remove_place(place_id):
@@ -48,6 +51,7 @@ def remove_place(place_id):
         return jsonify({}), 200
     else:
         abort(404)
+
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def add_place(city_id):
@@ -76,6 +80,7 @@ def add_place(city_id):
     place.save()
     return jsonify(place.to_dict()), 201
 
+
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def modify_place(place_id):
     """
@@ -98,6 +103,7 @@ def modify_place(place_id):
     else:
         abort(404)
 
+
 @app_views.errorhandler(404)
 def handle_not_found_error(error):
     """
@@ -105,6 +111,7 @@ def handle_not_found_error(error):
     """
     response = {'error': 'Not found'}
     return jsonify(response), 404
+
 
 @app_views.errorhandler(400)
 def handle_bad_request_error(error):
@@ -114,6 +121,7 @@ def handle_bad_request_error(error):
     """
     response = {'error': 'Bad Request'}
     return jsonify(response), 400
+
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def search_places():
